@@ -11,6 +11,7 @@ import styles from './Style';
 //Component Import
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import AppButton from '../../Components/AppButton';
+import AppTextInput from '../../Components/AppTextInput';
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const validationSchema = yup.object().shape({
@@ -84,14 +85,10 @@ function VerifyPhone(props) {
                 Didnt't Get Code? Resend.
               </Text>
             </TouchableOpacity>
-            <AppFormField
-              placeholder="VerificationCode:                        "
-              autoCaptalize="none"
-              name="Code"
-              keyboardType="default"
-            />
+
             <AppButton title="Continue" color="green" />
           </AppForm>
+          <AppTextInput placeholder="VerificationCode" />
         </View>
       </View>
     </ScrollView>

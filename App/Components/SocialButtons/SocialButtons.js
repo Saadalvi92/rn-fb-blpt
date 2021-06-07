@@ -4,7 +4,7 @@ import AppIcon from '../AppIcon';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Navigation} from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-function SocialButtons({onPressPhone}) {
+function SocialButtons({onPressPhone, onFbPress, onGooglePress}) {
   return (
     <View
       style={{
@@ -17,13 +17,12 @@ function SocialButtons({onPressPhone}) {
           <Icon name="call" size={50} color="purple" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
-        {/* <SocialIcon type="google-plus-official" /> */}
+      <TouchableOpacity onPress={onGooglePress}>
         <View style={{backgroundColor: 'red', elevation: 8, borderRadius: 10}}>
           <Icon name="logo-google" size={50} color="#FFF" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onFbPress}>
         <Icon
           name="logo-facebook"
           size={50}
