@@ -10,6 +10,7 @@ import {Navigation} from 'react-native-navigation';
 import styles from './Style';
 //Component Import
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
+import Header from '../../Components/Header';
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const validationSchema = yup.object().shape({
@@ -25,37 +26,7 @@ function VerifyEmail(props) {
   return (
     <ScrollView>
       <View style={styles.background}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-                marginTop: '8%',
-              }}>
-              Verify
-            </Text>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-              }}>
-              Email
-            </Text>
-          </View>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/Applogo.png')}
-              style={styles.logo}
-            />
-          </View>
-        </View>
+        <Header title="Verify" title2="Email" />
         <View style={styles.buttonsContainer}>
           <AppForm
             initialValues={{phoneNumber: '', Code: '123456'}}

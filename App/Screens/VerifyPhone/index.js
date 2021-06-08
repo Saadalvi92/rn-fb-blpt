@@ -3,7 +3,14 @@ import React, {Component, useState} from 'react';
 import * as yup from 'yup';
 
 //Import react-native
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  TextInput,
+} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 //styles Import
@@ -12,6 +19,10 @@ import styles from './Style';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import AppButton from '../../Components/AppButton';
 import AppTextInput from '../../Components/AppTextInput';
+import Header from '../../Components/Header';
+import auth from '@react-native-firebase/auth';
+import {observer} from 'mobx-react-lite';
+import {SigninStoreContext, useSigninStore} from '../../../Store/MobxSignin';
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const validationSchema = yup.object().shape({
@@ -20,55 +31,61 @@ const validationSchema = yup.object().shape({
     .matches(phoneRegExp, 'Phone number is not valid')
     .required()
     .label('phoneNumber'),
-  Code: yup.string().required().label('Code'),
 });
 
-function VerifyPhone(props) {
+const VerifyPhone = observer(props => {
+  const {SigninMobx} = useSigninStore();
+  const [ph, setPH] = useState();
+  const [confirm, setConfirm] = useState();
+  const [code, setCode] = useState();
+  const VerifyPhonenum = async data => {
+    try {
+      const getConfirmation = await auth().signInWithPhoneNumber(data);
+      console.log(JSON.stringify(getConfirmation));
+      setConfirm(getConfirmation);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const VerifyCode = async () => {
+    try {
+      const response = await confirm.confirm(code);
+      if (response) {
+        console.log(response.user.phoneNumber);
+        SigninMobx(response.user);
+        Navigation.push(props.componentId, {
+          component: {
+            name: 'ProfileScreen',
+            options: {
+              hardwareBackButton: {
+                dismissModalOnPress: false,
+                popStackOnPress: false,
+              },
+              topBar: {
+                visible: false,
+              },
+            },
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ScrollView>
       <View style={styles.background}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-                marginTop: '8%',
-              }}>
-              Verify
-            </Text>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-              }}>
-              Phone
-            </Text>
-          </View>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/Applogo.png')}
-              style={styles.logo}
-            />
-          </View>
-        </View>
+        <Header title="Verify" title2="Phone" />
         <View style={styles.buttonsContainer}>
           <AppForm
-            initialValues={{phoneNumber: '', Code: '123456'}}
+            initialValues={{phoneNumber: ''}}
             onSubmit={Values => {
-              console.log(Values);
+              VerifyPhonenum('+92' + Values.phoneNumber);
             }}
             validationSchema={validationSchema}>
             <Text style={styles.Textstyle}>Phone #</Text>
             <AppFormField
-              placeholder="Phone #:                           "
-              autoCaptalize="none"
+              placeholder="Phone #: without countryCode                         "
               name="phoneNumber"
               keyboardType="numeric"
             />
@@ -85,14 +102,17 @@ function VerifyPhone(props) {
                 Didnt't Get Code? Resend.
               </Text>
             </TouchableOpacity>
-
-            <AppButton title="Continue" color="green" />
           </AppForm>
-          <AppTextInput placeholder="VerificationCode" />
+          <AppTextInput
+            placeholder="VerificationCode"
+            onChangeText={setCode}
+            value={code}
+          />
+          <AppButton title="Continue" color="green" onPress={VerifyCode} />
         </View>
       </View>
     </ScrollView>
   );
-}
+});
 
 export default VerifyPhone;

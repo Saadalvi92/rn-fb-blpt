@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Image, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {Navigation} from 'react-native-navigation';
+import Header from '../../Components/Header';
 import AppButton from '../../Components/AppButton';
 import styles from './Style';
 export default class MainAddPic extends Component {
@@ -59,37 +60,7 @@ export default class MainAddPic extends Component {
       return (
         <ScrollView>
           <View style={styles.background}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1}}>
-                <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 35,
-                    fontWeight: 'bold',
-                    alignItems: 'flex-start',
-                    marginLeft: '20%',
-                    marginTop: '10%',
-                  }}>
-                  Add a
-                </Text>
-                <Text
-                  style={{
-                    color: '#000',
-                    fontSize: 35,
-                    fontWeight: 'bold',
-                    alignItems: 'flex-start',
-                    marginLeft: '20%',
-                  }}>
-                  Picture
-                </Text>
-              </View>
-              <View style={styles.logoContainer}>
-                <Image
-                  source={require('../../assets/Applogo.png')}
-                  style={styles.logo}
-                />
-              </View>
-            </View>
+            <Header title="Add a " title2="Picture" />
             <Image
               source={require('../../assets/Vector.png')}
               style={{

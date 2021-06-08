@@ -15,6 +15,7 @@ import styles from './Style';
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import SocialButtons from '../../Components/SocialButtons/SocialButtons';
 import AppButton from '../../Components/AppButton';
+import Header from '../../Components/Header';
 const validationSchema = yup.object().shape({
   email: yup.string().required().email().label('Email'),
   password: yup.string().required().min(4).label('Password'),
@@ -30,15 +31,15 @@ const WelcomeImageScreen = observer(props => {
     });
   }, []);
   async function onGooglePress() {
-    const {idToken} = await GoogleSignin.signIn();
-
+    const {idToken, user} = await GoogleSignin.signIn();
+    // console.log(token);
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // Sign-in the user with the credential
     return (
       auth().signInWithCredential(googleCredential),
-      SigninMobx(googleCredential),
+      SigninMobx(user),
       Navigation.push(props.componentId, {
         component: {
           name: 'ProfileScreen',
@@ -137,36 +138,7 @@ const WelcomeImageScreen = observer(props => {
   return (
     <ScrollView>
       <View style={styles.background}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-                marginTop: '5%',
-              }}>
-              Sign in
-            </Text>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                marginLeft: '20%',
-              }}>
-              to MyApp
-            </Text>
-          </View>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/Applogo.png')}
-              style={styles.logo}
-            />
-          </View>
-        </View>
+        <Header title="Sign in" title2="to MyApp" />
         <View style={styles.buttonsContainer}>
           <AppForm
             initialValues={{email: '', password: ''}}
@@ -190,7 +162,7 @@ const WelcomeImageScreen = observer(props => {
               name="password"
               secureTextEntry={true}
             />
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <TouchableOpacity>
               <Text
                 style={{textAlign: 'right', color: 'blue', marginRight: 30}}>
                 Forgot Password?

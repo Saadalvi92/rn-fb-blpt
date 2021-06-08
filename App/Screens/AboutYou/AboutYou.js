@@ -11,6 +11,7 @@ import styles from './Style';
 //Component Import
 import {AppForm, AppFormField, SubmitButton} from '../../Components/forms';
 import DatePicker from 'react-native-date-picker';
+import Header from '../../Components/Header';
 const validationSchema = yup.object().shape({
   username: yup.string().required().label('User Name'),
   fullname: yup.string().required().label('FullName'),
@@ -26,27 +27,7 @@ function AboutYou(props) {
   return (
     <ScrollView>
       <View style={styles.background}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-                marginTop: '20%',
-              }}>
-              AboutYou
-            </Text>
-          </View>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/Applogo.png')}
-              style={styles.logo}
-            />
-          </View>
-        </View>
+        <Header title="About You" />
         <View style={styles.buttonsContainer}>
           <AppForm
             initialValues={{username: '', fullname: '', address: ''}}
@@ -56,6 +37,10 @@ function AboutYou(props) {
                 component: {
                   name: 'MainAddPicture',
                   options: {
+                    hardwareBackButton: {
+                      dismissModalOnPress: false,
+                      popStackOnPress: false,
+                    },
                     topBar: {
                       visible: false,
                     },

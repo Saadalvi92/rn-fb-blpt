@@ -13,14 +13,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  
+  logo: {marginTop: '10%', marginRight: '20%'},
   logoContainer: {position: 'relative', alignItems: 'flex-end'},
-  BottomText: {
-    textAlign: 'center',
-    color: colors.black,
-    fontWeight: '600',
-    fontSize: 18,
+  Textstyle: {
+    marginLeft: 16,
+    fontSize: 17,
+    fontWeight: '700',
+    color: colors.lightGrey,
   },
-  BottomView: {marginTop: 20, marginBottom: 20},
 });
 export default styles;

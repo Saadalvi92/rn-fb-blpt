@@ -17,6 +17,7 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {observer} from 'mobx-react-lite';
 import {SigninStoreContext, useSigninStore} from '../../../Store/MobxSignin';
+import Header from '../../Components/Header';
 const validationSchema = yup.object().shape({
   email: yup.string().required().email().label('Email'),
   password: yup.string().required().min(4).label('Password'),
@@ -34,24 +35,24 @@ const RegisterScreen = props => {
     });
   }, []);
   async function onGooglePress() {
-    const {idToken} = await GoogleSignin.signIn();
-
+    const {idToken, user} = await GoogleSignin.signIn();
+    // console.log(token);
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // Sign-in the user with the credential
     return (
       auth().signInWithCredential(googleCredential),
-      SigninMobx(googleCredential),
+      SigninMobx(user),
       Navigation.push(props.componentId, {
         component: {
           name: 'ProfileScreen',
           options: {
+            hardwareBackButton: {
+              dismissModalOnPress: false,
+              popStackOnPress: false,
+            },
             topBar: {
-              hardwareBackButton: {
-                dismissModalOnPress: false,
-                popStackOnPress: false,
-              },
               visible: false,
             },
           },
@@ -108,6 +109,20 @@ const RegisterScreen = props => {
       .createUserWithEmailAndPassword(Values.email, Values.password)
       .then(() => {
         console.log('User account created & signed in!');
+        Navigation.push(props.componentId, {
+          component: {
+            name: 'AboutYou',
+            options: {
+              hardwareBackButton: {
+                dismissModalOnPress: false,
+                popStackOnPress: false,
+              },
+              topBar: {
+                visible: false,
+              },
+            },
+          },
+        });
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -124,37 +139,7 @@ const RegisterScreen = props => {
   return (
     <ScrollView>
       <View style={styles.background}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-                marginTop: '5%',
-              }}>
-              Create
-            </Text>
-            <Text
-              style={{
-                color: '#000',
-                fontSize: 35,
-                fontWeight: 'bold',
-                alignItems: 'flex-start',
-                marginLeft: '20%',
-              }}>
-              an Account
-            </Text>
-          </View>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/Applogo.png')}
-              style={styles.logo}
-            />
-          </View>
-        </View>
+        <Header title="Create" title2="an Account" />
         <View style={styles.buttonsContainer}>
           <AppForm
             initialValues={{email: '', password: '', Repassword: ''}}
