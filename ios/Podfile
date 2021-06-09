@@ -26,6 +26,8 @@ target 'rnfbblpt' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/@react-native-google-signin/google-signin'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'rnfbblptTests' do
     inherit! :complete
     # Pods for testing
