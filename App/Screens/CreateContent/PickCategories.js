@@ -9,6 +9,10 @@ import {
 } from 'react-native';
 import AppText from '../../Components/AppText';
 import AppButton from '../../Components/AppButton';
+import Topbar from './Topbar';
+import {Navigation} from 'react-native-navigation';
+import colors from '../../config/colors';
+
 function PickCategories(props) {
   const dataTags = [
     'Food',
@@ -38,7 +42,35 @@ function PickCategories(props) {
     }
   };
   return (
-    <View style={{flex: 1, height: '100%', justifyContent: 'center'}}>
+    <View style={{flex: 1, height: '100%'}}>
+      <Topbar
+        title1="<- Add Videos"
+        title2="Add Tags ->"
+        onPress1={() => {
+          Navigation.pop(props.componentId);
+        }}
+        onPress2={() => {
+          Navigation.push(props.componentId, {
+            component: {
+              name: 'AddTags',
+              options: {
+                topBar: {
+                  //     visible: false,
+                  animate: true,
+                  title: {
+                    text: 'AddTags',
+                    fontSize: 25,
+                    alignment: 'center',
+                    color: colors.white,
+                  },
+                  backButton: {color: colors.white},
+                  background: {color: colors.green},
+                },
+              },
+            },
+          });
+        }}
+      />
       <TextInput
         style={styles.textInputStyle}
         onChangeText={text => searchFilterFunction(text)}

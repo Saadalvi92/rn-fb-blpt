@@ -5,6 +5,8 @@ import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AppButton from '../../Components/AppButton';
 import colors from '../../config/colors';
+import Topbar from './Topbar';
+import {Navigation} from 'react-native-navigation';
 function AddVideos(props) {
   const [fileUri, setfileUri] = useState();
   const options2 = {
@@ -15,8 +17,37 @@ function AddVideos(props) {
   };
 
   return (
-    <View style={{flex: 1, height: '100%', justifyContent: 'center'}}>
-      <View style={{flex: 2 / 3, alignItems: 'center'}}>
+    <View style={{flex: 1, height: '100%'}}>
+      <Topbar
+        title1="<- Add Photos"
+        title2="Pick Category ->"
+        onPress1={() => {
+          Navigation.pop(props.componentId);
+        }}
+        onPress2={() => {
+          Navigation.push(props.componentId, {
+            component: {
+              name: 'PickCategories',
+              options: {
+                topBar: {
+                  //     visible: false,
+                  animate: true,
+                  title: {
+                    text: 'Pick Categories',
+                    fontSize: 25,
+                    alignment: 'center',
+                    color: colors.white,
+                  },
+                  backButton: {color: colors.white},
+                  background: {color: colors.green},
+                },
+              },
+            },
+          });
+        }}
+      />
+      <View
+        style={{flex: 2 / 3, alignItems: 'center', justifyContent: 'center'}}>
         {fileUri ? (
           <Video
             source={{uri: fileUri}}

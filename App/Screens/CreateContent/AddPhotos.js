@@ -11,6 +11,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AppButton from '../../Components/AppButton';
 import colors from '../../config/colors';
+import Topbar from './Topbar';
+import {Navigation} from 'react-native-navigation';
 function AddPhotos(props) {
   const images = [
     {id: 1, uri: require('../../assets/AddPic.png')},
@@ -33,6 +35,34 @@ function AddPhotos(props) {
 
   return (
     <View style={{flex: 1, height: '100%'}}>
+      <Topbar
+        title1="<- Set Location"
+        title2="Add Videos"
+        onPress1={() => {
+          Navigation.pop(props.componentId);
+        }}
+        onPress2={() => {
+          Navigation.push(props.componentId, {
+            component: {
+              name: 'AddVideos',
+              options: {
+                topBar: {
+                  //     visible: false,
+                  animate: true,
+                  title: {
+                    text: 'Add Videos',
+                    fontSize: 25,
+                    alignment: 'center',
+                    color: colors.white,
+                  },
+                  backButton: {color: colors.white},
+                  background: {color: colors.green},
+                },
+              },
+            },
+          });
+        }}
+      />
       <View>
         <FlatList
           data={images}

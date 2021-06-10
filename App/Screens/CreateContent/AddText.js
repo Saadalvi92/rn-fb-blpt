@@ -1,11 +1,41 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import Textarea from 'react-native-textarea';
 import AppButton from '../../Components/AppButton';
 import colors from '../../config/colors';
+import Topbar from './Topbar';
 function AddText(props) {
   return (
     <View style={{flex: 1, height: '100%', justifyContent: 'center'}}>
+      <Topbar
+        title1="<- Add Title"
+        title2="Set Location ->"
+        onPress1={() => {
+          Navigation.pop(props.componentId);
+        }}
+        onPress2={() => {
+          Navigation.push(props.componentId, {
+            component: {
+              name: 'SetLocation',
+              options: {
+                topBar: {
+                  //     visible: false,
+                  animate: true,
+                  title: {
+                    text: 'Set Location',
+                    fontSize: 25,
+                    alignment: 'center',
+                    color: colors.white,
+                  },
+                  backButton: {color: colors.white},
+                  background: {color: colors.green},
+                },
+              },
+            },
+          });
+        }}
+      />
       <View style={styles.container}>
         <Textarea
           containerStyle={styles.textareaContainer}
@@ -17,7 +47,13 @@ function AddText(props) {
           placeholderTextColor={'#000'}
           underlineColorAndroid={'transparent'}
         />
-        <AppButton title="Save" color="green" />
+        <AppButton
+          title="Save"
+          color="green"
+          onPress={() => {
+            Navigation.pop(props.componentId);
+          }}
+        />
       </View>
     </View>
   );
