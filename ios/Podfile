@@ -28,6 +28,10 @@ target 'rnfbblpt' do
 
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
   target 'rnfbblptTests' do
     inherit! :complete
     # Pods for testing

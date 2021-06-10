@@ -13,7 +13,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
+import com.airbnb.android.react.maps.MapsPackage;
+import com.brentvatne.react.ReactVideoPackage;
 public class MainApplication extends NavigationApplication {
 
   private final ReactNativeHost mReactNativeHost =

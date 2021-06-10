@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Textarea from 'react-native-textarea';
 import AppButton from '../../Components/AppButton';
+import colors from '../../config/colors';
 function AddText(props) {
   return (
     <View style={{flex: 1, height: '100%', justifyContent: 'center'}}>
@@ -31,6 +32,8 @@ const styles = StyleSheet.create({
     height: '80%',
     padding: 5,
     backgroundColor: '#F5FCFF',
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
   },
   textarea: {
     textAlignVertical: 'top',
